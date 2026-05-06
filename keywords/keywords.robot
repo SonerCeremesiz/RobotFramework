@@ -35,22 +35,51 @@ Open Company Training
     Wait Until Location Contains   schulungsarten
 
 ############################################################
-Book a consulting appointement 
+Select a consulting appointement 
     
     Click       css=div:nth-child(2) > div.tca-card-body > div.tca-actions > a 
     Wait Until Location Contains     /kontakt
     Accept Cookie Policy  
+
+#############################################################
+Fill Contact Form   
+
     Scroll To Bottom
     Type Text    css=input[id="f-279-name"]    Test    delay=200ms
     Type Text    css=input[id="f-279-email"]    test_email@test.de     delay=200ms
     Type Text    css=input[id="f-279-phone"]    01758542369     delay=200ms
     Type Text    css=input[id="f-279-subject"]           Company event  delay=200ms
-    Type Text    css= [id="f-279-message"]     test msg      delay=200ms
+    Type Text    css=[id="f-279-message"]     test msg      delay=200ms
 
     Click    css=span.checkmark
     Click    css=button[id="f-279-submit"]
- 
+############################################################
+Verify Contact Form   
+
+    Scroll To Bottom
+    Click    css=button[id="f-279-submit"]
+    Wait Until Element Is Visible    css=div.alert.alert-danger        5s
+    Wait Until Element Is Visible    css=input[id="f-279-name"].is-invalid        5s
+   # Wait Until Element Is Visible    css=input[id="f-279-phone"].is-invalid        5s   not mandatory
+    Wait Until Element Is Visible    css=input[id="f-279-subject"].is-invalid        5s
+    Wait Until Element Is Visible    css=[id="f-279-message"].is-invalid        5s
+
 #############################################################
+Select All Training 
+
+    Click    css=[id="schulung-button"]
+    Wait Until Location Contains    /Alle-Schulungen#schulungen
+
+###############################################
+Search for a Training 
+    [Arguments]    ${training}
+
+    Type Text    css=input.form-control.rounded-4.w-100         ${training}
+    #${training}  Convert To Lower Case   ${training}
+    Keyboard Key    press    Enter
+    Wait Until Location Contains   ${training}
+
+############################################################
 Verify Booking Success  
     
     Wait Until Element Is Visible   css=div.alert.alert-success    5s
