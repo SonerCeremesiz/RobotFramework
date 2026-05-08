@@ -34,4 +34,10 @@ Validate Contact Form
     Verify Contact Form  
  
 ###############################################################
+Test Header Search 
     
+    Search Header  KI
+    Verify Search Results    KI 
+    Open Training Page  
+
+###############################################################

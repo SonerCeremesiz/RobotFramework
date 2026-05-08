@@ -57,24 +57,24 @@ Fill Contact Form
 Verify Contact Form   
 
     Scroll To Bottom
-    Click    css=button[id="f-279-submit"]
-    Wait Until Element Is Visible    css=div.alert.alert-danger        5s
-    Wait Until Element Is Visible    css=input[id="f-279-name"].is-invalid        5s
-   # Wait Until Element Is Visible    css=input[id="f-279-phone"].is-invalid        5s   not mandatory
-    Wait Until Element Is Visible    css=input[id="f-279-subject"].is-invalid        5s
-    Wait Until Element Is Visible    css=[id="f-279-message"].is-invalid        5s
+    Click    css=button[id="f-279-submit"]   #submit button 
+    Wait Until Element Is Visible    css=div.alert.alert-danger   5s           #error alert message      
+    Wait Until Element Is Visible    css=input[id="f-279-name"].is-invalid    5s            #name error msg        
+   #Wait Until Element Is Visible    css=input[id="f-279-phone"].is-invalid        5s       not mandatory
+    Wait Until Element Is Visible    css=input[id="f-279-subject"].is-invalid        5s   #subject error msg 
+    Wait Until Element Is Visible    css=[id="f-279-message"].is-invalid        5s        #msg field error 
 
 #############################################################
 Select All Training 
 
-    Click    css=[id="schulung-button"]
+    Click    css=[id="schulung-button"]        #header button 
     Wait Until Location Contains    /Alle-Schulungen#schulungen
 
 ###############################################
 Search for a Training 
     [Arguments]    ${training}
 
-    Type Text    css=input.form-control.rounded-4.w-100         ${training}
+    Type Text    css=input.form-control.rounded-4.w-100         ${training}     #footer search field
     #${training}  Convert To Lower Case   ${training}
     Keyboard Key    press    Enter
     Wait Until Location Contains   ${training}
@@ -82,7 +82,7 @@ Search for a Training
 ############################################################
 Verify Booking Success  
     
-    Wait Until Element Is Visible   css=div.alert.alert-success    5s
+    Wait Until Element Is Visible   css=div.alert.alert-success    5s    #succes msg 
 
 #############################################################
 Accept Cookie Policy 
@@ -102,6 +102,29 @@ Set Video Path
    
     [Return]    ${video_path}
 ################################################################
+Search Header 
+    [Arguments]    ${training}
+    
+    Type Text    css=input.form-control.border-0.shadow-none.bg-primary.text-white.placeholder-light   ${training}    
+    Keyboard Key    press    Enter
+
+###############################################################
+Open Training Page 
+
+    Click     css=[href*="/training/expose/Alle-Schulungen/6"]   #first element
+    Wait Until Location Contains    /Alle-Schulungen/6
+    Wait Until Element Is Visible   css=[href="#buchungen"]    5s     #check appointements 
+    Wait Until Element Is Visible    css=div.row div:nth-child(1) div h3        5s  #first training title 
+    Wait Until Element Is Visible    css=div.row div:nth-child(2) div h3    5s    #second training title 
+    Wait Until Element Is Visible    css=div.row div:nth-child(3) div h3      5s    #third training title
+
+###############################################################
+Verify Search Results
+    [Arguments]    ${training}
+
+    Wait Until Location Contains   ${training}
+
+###############################################################
 Teardown Test 
   
     Close Browser   
