@@ -1,130 +1,117 @@
 *** Settings ***
 
 Library    Browser    strict=False    timeout=30s    retry_assertions_for=20s
-
+Library    custom_library.py
 Resource    ././resources.robot 
 
 *** Variables ***
-# add cloudflare credentials 
-#${url}   https://www.testconsulting.de/
-#${cookie_selector}    css=p:nth-child(3) button.api--function-all.btn.btn-primary.btn-sm
 ${url}   https://www.testconsulting-academy.de
-${cookie_selector}    css=p:nth-child(3) button.api--function-all.btn.btn-primary.btn-sm
-${selector_entdecke_schulungen}   css=div.home-hero [href="#schulungen"]
-${selector_firmenschulung}     css=#schulungen > div > div:nth-child(1) > a
 
+#############################################################
+# SETUP AND TEARDOWN
 #############################################################
 *** Keywords ***
-#############################################################
-Open Homepage
 
+Setup Test Environment
     New Browser    chromium      headless=False   
     ${video_path}   Set Video Path  
     New Context    recordVideo={'dir': '${video_path}'}    viewport={'width': 1440, 'height': 900}
     New Page    ${url}
     Show Keyword Banner    True    top: 5px; bottom: auto; left: 5px; background-color: #00909077; font-size: 12px; color: black;
     Sleep    5s
-    Log To Console      Page is open 
-
-#############################################################
-Open Company Training 
-    
-    Click   ${selector_entdecke_schulungen}   #schulungen entdecken 
-    Wait Until Location Contains        schulungen
-    Click   ${selector_firmenschulung}    #open firmen-schulungs seite 
-    Wait Until Location Contains   schulungsarten
-
+    Log To Console      Page is open
+    Accept Cookie Policy
 ############################################################
-Select a consulting appointement 
-    
-    Click       css=div:nth-child(2) > div.tca-card-body > div.tca-actions > a 
-    Wait Until Location Contains     /kontakt
-    Accept Cookie Policy  
-
+Teardown Test Environment
+    Close Browser
 #############################################################
-Fill Contact Form   
-
-    Scroll To Bottom
-    Type Text    css=input[id="f-279-name"]    Test    delay=200ms
-    Type Text    css=input[id="f-279-email"]    test_email@test.de     delay=200ms
-    Type Text    css=input[id="f-279-phone"]    01758542369     delay=200ms
-    Type Text    css=input[id="f-279-subject"]           Company event  delay=200ms
-    Type Text    css=[id="f-279-message"]     test msg      delay=200ms
-
-    Click    css=span.checkmark
-    Click    css=button[id="f-279-submit"]
-############################################################
-Verify Contact Form   
-
-    Scroll To Bottom
-    Click    css=button[id="f-279-submit"]   #submit button 
-    Wait Until Element Is Visible    css=div.alert.alert-danger   5s           #error alert message      
-    Wait Until Element Is Visible    css=input[id="f-279-name"].is-invalid    5s            #name error msg        
-   #Wait Until Element Is Visible    css=input[id="f-279-phone"].is-invalid        5s       not mandatory
-    Wait Until Element Is Visible    css=input[id="f-279-subject"].is-invalid        5s   #subject error msg 
-    Wait Until Element Is Visible    css=[id="f-279-message"].is-invalid        5s        #msg field error 
-
-#############################################################
-Select All Training 
-
-    Click    css=[id="schulung-button"]        #header button 
-    Wait Until Location Contains    /Alle-Schulungen#schulungen
-
-###############################################
-Search for a Training 
-    [Arguments]    ${training}
-
-    Type Text    css=input.form-control.rounded-4.w-100         ${training}     #footer search field
-    #${training}  Convert To Lower Case   ${training}
-    Keyboard Key    press    Enter
-    Wait Until Location Contains   ${training}
-
-############################################################
-Verify Booking Success  
-    
-    Wait Until Element Is Visible   css=div.alert.alert-success    5s    #succes msg 
-
-#############################################################
-Accept Cookie Policy 
-    ${cookie_law}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${cookie_selector}    5s
-    IF      ${cookie_law}
-        Click    ${cookie_selector} 
-    END 
-##############################################################
-Set Video Path 
-
+Set Video Path
     ${date}=  Get Current Date   result_format=%d-%m-%Y
     ${time}=  Get Current Date   result_format=%H%M%S
     ${formatted_time}=  Evaluate  "${time}"[:2] + "h" + "${time}"[2:4] + "m" + "${time}"[4:] + "s"
     ${video_file_name}=    Set Variable     ${TEST_NAME}_${date}_${formatted_time}.webm
     ${video_path}=    Set Variable    ${OUTPUT_DIR}${/}video${/}${video_file_name}
     ${video_path}=    Make Path Windows Compatible    ${video_path}
-   
     [Return]    ${video_path}
+##############################################################
+Accept Cookie Policy
+    ${cookie_law}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${page.cookie_button}    5s
+    IF      ${cookie_law}
+        Click    ${page.cookie_button} 
+    END
+
+#############################################################
+# NAVIGATION KEYWORDS
+#############################################################
+
+Navigate To Company Training
+    Click   ${page.discover_trainings}   #schulungen entdecken 
+    Wait Until Location Contains        schulungen
+    Click   ${page.company_training}    #open firmen-schulungs seite 
+    Wait Until Location Contains   schulungsarten
 ################################################################
-Search Header 
-    [Arguments]    ${training}
-    
-    Type Text    css=input.form-control.border-0.shadow-none.bg-primary.text-white.placeholder-light   ${training}    
-    Keyboard Key    press    Enter
+Navigate To All Trainings
+    Click    ${header.all_trainings_button}        #header button 
+    Wait Until Location Contains    /Alle-Schulungen#schulungen
+##############################################################
+Open Training Details Page
 
-###############################################################
-Open Training Page 
-
-    Click     css=[href*="/training/expose/Alle-Schulungen/6"]   #first element
+    Click         ${page.first_training}
     Wait Until Location Contains    /Alle-Schulungen/6
-    Wait Until Element Is Visible   css=[href="#buchungen"]    5s     #check appointements 
-    Wait Until Element Is Visible    css=div.row div:nth-child(1) div h3        5s  #first training title 
-    Wait Until Element Is Visible    css=div.row div:nth-child(2) div h3    5s    #second training title 
-    Wait Until Element Is Visible    css=div.row div:nth-child(3) div h3      5s    #third training title
+    Wait Until Element Is Visible   ${page.check_appointement}    5s     #check appointements 
+    FOR   ${index}    IN RANGE    1   3  
+        ${training_title}=    Build Selector    ${page.training_title}    ${index}
+        Wait Until Element Is Visible    ${training_title}    5s
+    END
 
-###############################################################
+#############################################################
+# FORM OPERATIONS
+#############################################################
+Select Consulting Appointment
+
+    Click   ${page.consulting_appointment}
+    Wait Until Location Contains     /kontakt
+#################################################################
+Fill Contact Form
+
+    Scroll To Bottom
+    Type Text    ${form.name_field}    Test    delay=200ms
+    Type Text    ${form.email_field}    test_email@test.de     delay=200ms
+    Type Text    ${form.phone_field}    01758542369     delay=200ms
+    Type Text    ${form.subject_field}           Company event  delay=200ms
+    Type Text    ${form.message_field}     test msg      delay=200ms
+    Click    ${form.privacy_checkbox}
+    Click    ${form.submit_button}
+##################################################################
+Verify Contact Form Validation Errors
+    Scroll To Bottom
+    Click    ${form.submit_button}   #submit button 
+    Wait Until Element Is Visible    ${form.error_alert}   5s           #error alert message      
+    Wait Until Element Is Visible    ${form.name_error}    5s            #name error msg        
+    Wait Until Element Is Visible    ${form.subject_error}        5s   #subject error msg 
+    Wait Until Element Is Visible    ${form.message_error}        5s        #msg field error
+#################################################################        
+Verify Booking Confirmation Message
+    Wait Until Element Is Visible   ${form.success_message}    5s    #success msg
+
+#############################################################
+# SEARCH OPERATIONS
+#############################################################
+
+Search Training By Keyword
+    [Arguments]    ${training}
+
+    Type Text    ${footer.search_field}         ${training}     #footer search field
+    Keyboard Key    press    Enter
+    Wait Until Location Contains   ${training}
+#############################################################
+Search Using Header Search Field
+    [Arguments]    ${training}
+
+    Type Text    ${header.search_field}   ${training}    
+    Keyboard Key    press    Enter
+#############################################################
 Verify Search Results
     [Arguments]    ${training}
 
     Wait Until Location Contains   ${training}
-
-###############################################################
-Teardown Test 
-  
-    Close Browser   

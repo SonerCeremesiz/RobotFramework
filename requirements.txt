@@ -1,0 +1,9 @@
+robotframework==6.1.1
+robotframework-browser
+robotframework-requests
+robotframework-jsonlibrary
+robotframework-dependencylibrary
+robotframework-screencaplibrary
+robotframework-faker
+robotframework-sshlibrary
+pyyaml
