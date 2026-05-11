@@ -1,0 +1,8 @@
+page:
+  cookie_button: css=p:nth-child(3) button.api--function-all.btn.btn-primary.btn-sm
+  discover_trainings: css=div.home-hero [href="#schulungen"]
+  company_training: css=#schulungen > div > div:nth-child(1) > a
+  consulting_appointment: css=div:nth-child(2) > div.tca-card-body > div.tca-actions > a
+  first_training: css=[href*="/training/expose/Alle-Schulungen/6"]
+  training_title:  css=div.row div:nth-child(%s) div h3 
+  check_appointement:  css=[href="#buchungen"] 

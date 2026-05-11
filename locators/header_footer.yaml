@@ -1,0 +1,12 @@
+header:
+    all_trainings_button: css=[id="schulung-button"]
+    FAQ: css=[href*="/faq"]
+    abou_us: css=[href*="/about-us"]
+    testconsulting: css=[href*="/testconsulting"]
+    search_field: css=input.form-control.border-0.shadow-none.bg-primary.text-white.placeholder-light 
+
+
+
+
+footer:
+        search_field: css=input.form-control.rounded-4.w-100

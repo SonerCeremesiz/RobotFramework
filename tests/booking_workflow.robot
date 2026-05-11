@@ -4,40 +4,38 @@
 Library    Browser    strict=False    timeout=30s    retry_assertions_for=20s
 
 Resource    ../keywords/resources.robot
-Test Setup    Open Homepage
-Test Teardown     Teardown Test 
+Test Setup    Setup Test Environment
+Test Teardown    Teardown Test Environment 
 
 
 #############################################################
 *** Test Cases ***
 Book a Training
 
-
-    Open Company Training 
-    Select a consulting appointement 
-    Fill Contact Form 
-    Verify Booking Success
+    Navigate To Company Training
+    Select Consulting Appointment
+    Fill Contact Form
+    Verify Booking Confirmation Message
   
 ############################################################
 Verify Different Types of Training 
  
-    Select All Training 
-    Search for a Training      Atlassian 
-    Search for a Training      KI 
+    Navigate To All Trainings
+    Search Training By Keyword    Atlassian 
+    Search Training By Keyword    KI 
 
 #############################################################
-Validate Contact Form 
+Validate Contact form 
 
-
-    Open Company Training 
-    Select a consulting appointement 
-    Verify Contact Form  
+    Navigate To Company Training
+    Select Consulting Appointment
+    Verify Contact Form Validation Errors  
  
 ###############################################################
 Test Header Search 
     
-    Search Header  KI
+    Search Using Header Search Field    KI
     Verify Search Results    KI 
-    Open Training Page  
+    Open Training Details Page  
 
 ###############################################################
