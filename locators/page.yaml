@@ -4,5 +4,12 @@ page:
   company_training: css=#schulungen > div > div:nth-child(1) > a
   consulting_appointment: css=div:nth-child(2) > div.tca-card-body > div.tca-actions > a
   first_training: css=[href*="/training/expose/Alle-Schulungen/6"]
-  training_title:  css=div.row div:nth-child(%s) div h3 
-  check_appointement:  css=[href="#buchungen"] 
+  details:
+    training_title:  css=div.row div:nth-child(%s) div h3 
+    training_period:  css=div:nth-child(%s) div div.my-2.h5.fw-light
+    training_price:  css=div.row div:nth-child(%s) div div:nth-child(3)
+    available_training: css=div.row div:nth-child(%s) div div:nth-child(4)
+    training_language: css=div.row div:nth-child(%s) div div:nth-child(5)
+    check_appointement:  css=div.row div:nth-child(%s) div div.d-flex.justify-content-end a
+
+  

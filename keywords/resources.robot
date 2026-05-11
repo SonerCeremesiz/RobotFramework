@@ -1,6 +1,6 @@
 *** Settings ***
 Library     OperatingSystem
-Resource    ././main_resource.robot
+Resource    ./main_resource.robot
 
 *** Keywords ***
 

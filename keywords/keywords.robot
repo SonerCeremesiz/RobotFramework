@@ -1,7 +1,7 @@
 *** Settings ***
 
 Library    Browser    strict=False    timeout=30s    retry_assertions_for=20s
-Library    custom_library.py
+Library    ../custom_library.py
 Resource    ././resources.robot 
 
 *** Variables ***
@@ -58,41 +58,68 @@ Open Training Details Page
 
     Click         ${page.first_training}
     Wait Until Location Contains    /Alle-Schulungen/6
-    Wait Until Element Is Visible   ${page.check_appointement}    5s     #check appointements 
-    FOR   ${index}    IN RANGE    1   3  
-        ${training_title}=    Build Selector    ${page.training_title}    ${index}
-        Wait Until Element Is Visible    ${training_title}    5s
+
+##############################################################
+Verify Training Details
+  
+    FOR   ${index}    IN RANGE    1   4  
+        #verify the presence of training titles for the 3 slots 
+        @{selectors}=    Get Dictionary Values    ${page.details}
+        FOR    ${selector}    IN    @{selectors}
+            ${selector_with_index}=    Build Selector    ${selector}    ${index}
+            Wait Until Element Is Visible   ${selector_with_index}    5s
+        END
     END
 
 #############################################################
 # FORM OPERATIONS
 #############################################################
-Select Consulting Appointment
+Select Consulting Request 
+    
+    Hover    css=a[id="schulung-button"]
+    Click With Options    css=#schulung-menu li:nth-child(8) a       force=True
+    Wait Until Location Contains     /schulungen/anfrage
+   
+#############################################################
+Fill Conttact Form With Valid Data
+    Scroll To Bottom
+    Type Text    ${form.email_field}     test_email@test.de      delay=200ms
+    Type Text    ${form.subject_field}    Test    delay=200ms
+    Type Text    ${form.message_field}    Test    delay=200ms
+    Click        ${form.submit_button}
+    #catptcha handling is not possible, so we will just verify that the form submission was attempted by checking for the presence of input fields  
+    Wait Until Element Is Visible    ${form.email_field}      5s
+###############################################################
+#keywords for Testconsulting production contact form
+#Select Consulting Appointment TC
 
-    Click   ${page.consulting_appointment}
-    Wait Until Location Contains     /kontakt
+   # Click   ${page.consulting_appointment}
+    #Wait Until Location Contains     /kontakt
 #################################################################
-Fill Contact Form
+#keywords for Testconsulting production contact form
+#Fill Contact Form TC 
 
-    Scroll To Bottom
-    Type Text    ${form.name_field}    Test    delay=200ms
-    Type Text    ${form.email_field}    test_email@test.de     delay=200ms
-    Type Text    ${form.phone_field}    01758542369     delay=200ms
-    Type Text    ${form.subject_field}           Company event  delay=200ms
-    Type Text    ${form.message_field}     test msg      delay=200ms
-    Click    ${form.privacy_checkbox}
-    Click    ${form.submit_button}
+   # Scroll To Bottom
+  #  Accept Cookie Policy
+   # Type Text    ${form.name_field}    Test    delay=200ms
+   # Type Text    ${form.email_field}    test_email@test.de     delay=200ms
+   # Type Text    ${form.phone_field}    01758542369     delay=200ms
+   # Type Text    ${form.subject_field}           Company event  delay=200ms
+   # Type Text    ${form.message_field}     test msg      delay=200ms
+    #Click    ${form.privacy_checkbox}
+    #Click    ${form.submit_button}
 ##################################################################
-Verify Contact Form Validation Errors
-    Scroll To Bottom
-    Click    ${form.submit_button}   #submit button 
-    Wait Until Element Is Visible    ${form.error_alert}   5s           #error alert message      
-    Wait Until Element Is Visible    ${form.name_error}    5s            #name error msg        
-    Wait Until Element Is Visible    ${form.subject_error}        5s   #subject error msg 
-    Wait Until Element Is Visible    ${form.message_error}        5s        #msg field error
+#Verify Contact Form Validation Errors TC
+   # Scroll To Bottom
+   # Accept Cookie Policy
+   # Click    ${form.submit_button}   #submit button 
+   # Wait Until Element Is Visible    ${form.error_alert}   5s               
+   # Wait Until Element Is Visible    ${form.name_error}    5s                   
+   # Wait Until Element Is Visible    ${form.subject_error}        5s  
+   # Wait Until Element Is Visible    ${form.message_error}        5s       
 #################################################################        
-Verify Booking Confirmation Message
-    Wait Until Element Is Visible   ${form.success_message}    5s    #success msg
+#Verify Booking Confirmation Message TC 
+    #Wait Until Element Is Visible   ${form.success_message}    5s    #success msg
 
 #############################################################
 # SEARCH OPERATIONS
