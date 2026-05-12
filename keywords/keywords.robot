@@ -89,6 +89,34 @@ Fill Conttact Form With Valid Data
     Click        ${form.submit_button}
     #catptcha handling is not possible, so we will just verify that the form submission was attempted by checking for the presence of input fields  
     Wait Until Element Is Visible    ${form.email_field}      5s
+##############################################################
+Verify Contact Form Validation Errors
+    Scroll To Bottom
+    Type Text    ${form.email_field}     . 
+    Click    ${form.submit_button}   
+    Wait Until Element Is Visible    ${form.error.email}   5s               
+
+#############################################################
+# SEARCH OPERATIONS
+#############################################################
+
+Search Training By Keyword
+    [Arguments]    ${training}
+
+    Type Text    ${footer.search_field}         ${training}     #footer search field
+    Keyboard Key    press    Enter
+    Wait Until Location Contains   ${training}
+#############################################################
+Search Using Header Search Field
+    [Arguments]    ${training}
+
+    Type Text    ${header.search_field}   ${training}    
+    Keyboard Key    press    Enter
+#############################################################
+Verify Search Results
+    [Arguments]    ${training}
+
+    Wait Until Location Contains   ${training}
 ###############################################################
 #keywords for Testconsulting production contact form
 #Select Consulting Appointment TC
@@ -122,23 +150,3 @@ Fill Conttact Form With Valid Data
     #Wait Until Element Is Visible   ${form.success_message}    5s    #success msg
 
 #############################################################
-# SEARCH OPERATIONS
-#############################################################
-
-Search Training By Keyword
-    [Arguments]    ${training}
-
-    Type Text    ${footer.search_field}         ${training}     #footer search field
-    Keyboard Key    press    Enter
-    Wait Until Location Contains   ${training}
-#############################################################
-Search Using Header Search Field
-    [Arguments]    ${training}
-
-    Type Text    ${header.search_field}   ${training}    
-    Keyboard Key    press    Enter
-#############################################################
-Verify Search Results
-    [Arguments]    ${training}
-
-    Wait Until Location Contains   ${training}

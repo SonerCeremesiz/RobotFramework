@@ -3,6 +3,10 @@ form:
     subject_field: css=input[name="subject"]
     message_field: css=[id="description"]
     submit_button: css=input[type="submit"]
+    error:
+        email: css=input[id="email"].is-invalid
+       # subject: css=input[name="subject"].is-invalid     
+       # message: css=[id="description"].is-invalid
 
 #########################################################
     #TC locators
