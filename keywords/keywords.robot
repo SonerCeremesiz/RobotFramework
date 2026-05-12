@@ -118,6 +118,31 @@ Verify Search Results
 
     Wait Until Location Contains   ${training}
 ###############################################################
+Navigate To Home Page
+
+    Click    ${header.home_button}     #home button 
+    Wait Until Location Contains   testconsulting-academy.de/
+
+###############################################################
+Navigate to FAQ Page
+    Click    ${header.FAQ}     #FAQ page button
+    Wait Until Location Contains   /faq
+
+###############################################################
+Navigate To About Us Page 
+  
+    Click    ${header.about_us}    #about us page button
+    Wait Until Location Contains   /about
+
+##############################################################
+Navigate To Testconsulting Page
+    
+    Click With Options       ${header.testconsulting}     force=True    #testconsulting page button
+    ${url}=    Get Url
+    Should Contain   ${url}   .testconsulting.de/
+###############################################################
+
+###############################################################
 #keywords for Testconsulting production contact form
 #Select Consulting Appointment TC
 

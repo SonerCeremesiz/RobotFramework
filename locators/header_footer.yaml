@@ -1,10 +1,10 @@
 header:
     all_trainings_button: css=[id="schulung-button"]
-    FAQ: css=[href*="/faq"]
-    abou_us: css=[href*="/about-us"]
-    testconsulting: css=[href*="/testconsulting"]
+    FAQ: css=div.d-lg-flex.align-items-center.p-3.px-4 a:nth-child(4)
+    about_us: css=div.d-lg-flex.align-items-center.p-3.px-4 a:nth-child(5)
+    testconsulting: css=div.d-lg-flex.align-items-center.p-3.px-4 a.text-decoration-none.text-white.text-uppercase.fw-bold
     search_field: css=input.form-control.border-0.shadow-none.bg-primary.text-white.placeholder-light 
-
+    home_button: css=a.m-2.fw-bold.me-5.text-decoration-none.text-primary
 
 
 
