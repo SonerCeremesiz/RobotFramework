@@ -44,7 +44,7 @@ Test Header Search
     Verify Training Details
 
 ###############################################################
-Test Navigation 
+Test Navigation Header Menu
     [Documentation]    This test case verifies that users can navigate to different sections of the website using the main navigation menu and that the correct pages are displayed when menu items are clicked.
     
     Navigate To Home Page      
@@ -54,3 +54,10 @@ Test Navigation
     Navigate To Testconsulting Page     
     
 ################################################################
+Test Navigation Side Menu 
+    [Documentation]    This test case verifies that users can navigate to different sections of the website using the side navigation menu and that the correct pages are displayed when menu items are clicked.
+    
+    Navigate To All Trainings
+    Select Training From Side Menu     
+    
+#################################################################

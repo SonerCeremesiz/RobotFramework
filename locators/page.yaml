@@ -11,5 +11,11 @@ page:
     available_training: css=div.row div:nth-child(%s) div div:nth-child(4)
     training_language: css=div.row div:nth-child(%s) div div:nth-child(5)
     check_appointement:  css=div.row div:nth-child(%s) div div.d-flex.justify-content-end a
-
+  side_menu:
+    quality_training: css=[href*="/Quality-Assurance?q=#schulungen"]
+    testautomation_training:  css=[href*="/Testautomation?q=#schulungen"]
+    ki_training: css=[href*="/Smart-Testing-mit-KI?q=#schulungen"]
+    atlassian_training:   css=[href*="/Atlassian?q=#schulungen"]
+    softwareentwicklung_training: css=[href*="/Softwareentwicklung?q=#schulungen"]
+    management_training:  css=[href*="/Management?q=#schulungen"]
   

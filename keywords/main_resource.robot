@@ -29,5 +29,4 @@ Resource     keywords.robot
 Variables    ../locators/page.yaml
 Variables    ../locators/header_footer.yaml 
 Variables    ../locators/form.yaml
-
-  
+Variables    ../locations/navigation.yaml

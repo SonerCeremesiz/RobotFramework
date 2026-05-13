@@ -97,6 +97,21 @@ Verify Contact Form Validation Errors
     Wait Until Element Is Visible    ${form.error.email}   5s               
 
 #############################################################
+Select Training From Side Menu
+    @{selectors}=    Get Dictionary Values    ${page.side_menu}
+    @{locations}=    Get Dictionary Values    ${locations.navigation_side_menu}
+    ${length}=    Get Length    ${selectors}
+    # to ensure that the correct page is loaded after clicking on each training type in the side menu, we will loop through the list of selectors and their corresponding expected URL fragments, click on each selector, and verify that the URL contains the expected fragment. This approach allows us to efficiently test multiple navigation paths without duplicating code for each training type.
+    FOR    ${index}    IN RANGE    0    ${length}
+        ${selector}=    Get From List    ${selectors}    ${index}
+        ${location}=    Get From List    ${locations}    ${index}
+        Click    ${selector}
+        Log To Console    Clicked on ${selector}
+        Sleep    3s
+        Log To Console    Verifying location contains ${location}
+        Wait Until Location Contains    ${location}
+    END
+#############################################################
 # SEARCH OPERATIONS
 #############################################################
 

@@ -1,0 +1,8 @@
+locations:
+    navigation_side_menu:
+        quality_training: /Quality-Assurance?q=#schulungen
+        testautomation_training:  /Testautomation?q=#schulungen
+        ki_training: /Smart-Testing-mit-KI?q=#schulungen
+        atlassian_training:   /Atlassian?q=#schulungen
+        softwareentwicklung_training: /Softwareentwicklung?q=#schulungen
+        management_training:  /Management?q=#schulungen
