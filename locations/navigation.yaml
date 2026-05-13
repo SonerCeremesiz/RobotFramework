@@ -6,3 +6,12 @@ locations:
         atlassian_training:   /Atlassian?q=#schulungen
         softwareentwicklung_training: /Softwareentwicklung?q=#schulungen
         management_training:  /Management?q=#schulungen
+
+
+    tc:
+        home_page: /
+        about_us: /ueber-uns
+        consulting: /consulting
+        carreer:  /karriere
+        insights:  /aktuelles
+        contact:  /kontakt

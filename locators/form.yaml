@@ -9,18 +9,28 @@ form:
        # message: css=[id="description"].is-invalid
 
 #########################################################
-    #TC locators
-    #name_field: css=input[id="f-279-name"]
-    #email_field: css=input[id="f-279-email"]
-    #phone_field: css=input[id="f-279-phone"]
-    #subject_field: css=input[id="f-279-subject"]
-    #message_field: css=[id="f-279-message"]
-    #privacy_checkbox: css=span.checkmark
-    #submit_button: css=button[id="f-279-submit"]
-    #error_alert: css=div.alert.alert-danger
-    #name_error: css=input[id="f-279-name"].is-invalid
-    #phone_error: css=input[id="f-279-phone"].is-invalid
-    #subject_error: css=input[id="f-279-subject"].is-invalid
-    #message_error: css=[id="f-279-message"].is-invalid
-    #success_message: css=div.alert.alert-success
+tc:
+    header:
+        home_page:  css=li.level-0.selected a
+        about_us: css=[id="nav"] a[href="/ueber-uns/"]
+        consulting: css=[id="nav"] a[href="/consulting/"]
+        carreer:  css=[id="nav"] a[href="/karriere/"]
+        insights:  css=[id="nav"] a[href="/aktuelles/"]
+        contact:  css=[id="nav"] a[href="/kontakt/"]
+
+    form:
+        name_field: css=input[id="f-279-name"]
+        email_field: css=input[id="f-279-email"]
+        phone_field: css=input[id="f-279-phone"]
+        subject_field: css=input[id="f-279-subject"]
+        message_field: css=[id="f-279-message"]
+        privacy_checkbox: css=span.checkmark
+        submit_button: css=button[id="f-279-submit"]
+        error_alert: css=div.alert.alert-danger
+        name_error: css=input[id="f-279-name"].is-invalid
+        phone_error: css=input[id="f-279-phone"].is-invalid
+        subject_error: css=input[id="f-279-subject"].is-invalid
+        message_error: css=[id="f-279-message"].is-invalid
+        success_message: css=div.alert.alert-success
     
+##########################################################

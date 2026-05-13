@@ -6,6 +6,7 @@ Resource    ././resources.robot
 
 *** Variables ***
 ${url}   https://www.testconsulting-academy.de
+${url_production}   https://www.testconsulting.de/
 
 #############################################################
 # SETUP AND TEARDOWN
@@ -13,10 +14,16 @@ ${url}   https://www.testconsulting-academy.de
 *** Keywords ***
 
 Setup Test Environment
+    [Arguments]    ${academy}==True
+
     New Browser    chromium      headless=False   
     ${video_path}   Set Video Path  
     New Context    recordVideo={'dir': '${video_path}'}    viewport={'width': 1440, 'height': 900}
-    New Page    ${url}
+    IF  ${academy}
+        New Page    ${url}
+    ELSE
+        New Page    ${url_production}
+    END
     Show Keyword Banner    True    top: 5px; bottom: auto; left: 5px; background-color: #00909077; font-size: 12px; color: black;
     Sleep    5s
     Log To Console      Page is open
@@ -156,37 +163,54 @@ Navigate To Testconsulting Page
     ${url}=    Get Url
     Should Contain   ${url}   .testconsulting.de/
 ###############################################################
-
+#keywords for Testconsulting production contact form
 ###############################################################
-#keywords for Testconsulting production contact form
-#Select Consulting Appointment TC
+Navigate to Conatct Form TC
 
-   # Click   ${page.consulting_appointment}
-    #Wait Until Location Contains     /kontakt
+    Click   ${tc.header.contact}
+    Wait Until Location Contains     /kontakt
+
 #################################################################
-#keywords for Testconsulting production contact form
-#Fill Contact Form TC 
+Fill Contact Form TC 
 
-   # Scroll To Bottom
-  #  Accept Cookie Policy
-   # Type Text    ${form.name_field}    Test    delay=200ms
-   # Type Text    ${form.email_field}    test_email@test.de     delay=200ms
-   # Type Text    ${form.phone_field}    01758542369     delay=200ms
-   # Type Text    ${form.subject_field}           Company event  delay=200ms
-   # Type Text    ${form.message_field}     test msg      delay=200ms
-    #Click    ${form.privacy_checkbox}
-    #Click    ${form.submit_button}
+    Scroll To Bottom
+    Accept Cookie Policy
+    Type Text    ${tc.form.name_field}    Test    delay=200ms
+    Type Text    ${tc.form.email_field}    test_email@test.de     delay=200ms
+    Type Text    ${tc.form.phone_field}    01758542369     delay=200ms
+    Type Text    ${tc.form.subject_field}           Company event  delay=200ms
+    Type Text    ${tc.form.message_field}     test msg      delay=200ms
+    Click    ${tc.form.privacy_checkbox}
+    Click    ${tc.form.submit_button}
+
 ##################################################################
-#Verify Contact Form Validation Errors TC
-   # Scroll To Bottom
-   # Accept Cookie Policy
-   # Click    ${form.submit_button}   #submit button 
-   # Wait Until Element Is Visible    ${form.error_alert}   5s               
-   # Wait Until Element Is Visible    ${form.name_error}    5s                   
-   # Wait Until Element Is Visible    ${form.subject_error}        5s  
-   # Wait Until Element Is Visible    ${form.message_error}        5s       
+Verify Contact Form Validation Errors TC
+
+    Scroll To Bottom
+    Accept Cookie Policy
+    Click    ${tc.form.submit_button}   #submit button 
+    Wait Until Element Is Visible    ${tc.form.error_alert}   5s               
+    Wait Until Element Is Visible    ${tc.form.name_error}    5s                   
+    Wait Until Element Is Visible    ${tc.form.subject_error}        5s  
+    Wait Until Element Is Visible    ${tc.form.message_error}        5s   
+
 #################################################################        
-#Verify Booking Confirmation Message TC 
-    #Wait Until Element Is Visible   ${form.success_message}    5s    #success msg
+Verify Booking Confirmation Message TC 
+   
+    Wait Until Element Is Visible   ${tc.form.success_message}    5s    #success msg
 
 #############################################################
+Verify Header Navigation TC 
+
+    @{selectors}=    Get Dictionary Values    ${tc.header}
+    @{locations}=    Get Dictionary Values    ${locations.tc}
+    ${length}=    Get Length    ${selectors}
+    FOR    ${index}    IN RANGE    0    ${length}
+        ${selector}=    Get From List    ${selectors}    ${index}
+        ${location}=    Get From List    ${locations}    ${index}
+        Click With Options   ${selector}     force=True    clickCount=2
+        Log To Console   Clicked on ${selector}
+        Sleep   3s
+        Log To Console   Verifying location contains ${location}
+        Wait Until Location Contains   ${location}
+    END
