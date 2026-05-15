@@ -211,8 +211,9 @@ Verify Header Navigation TC
     END
 #############################################################
 Navigate to Career Page TC
-    Log To Console    message${tc_header.career} 
-    Click    ${tc_header.career}         #career page button
+
+    Click With Options    ${tc_header.career}    clickCount=2     #career page button
+    Sleep  3s
     Wait Until Location Contains   /karriere    
 
 ##################################################################
