@@ -38,7 +38,7 @@ Set Video Path
     ${video_file_name}=    Set Variable     ${TEST_NAME}_${date}_${formatted_time}.webm
     ${video_path}=    Set Variable    ${OUTPUT_DIR}${/}video${/}${video_file_name}
     ${video_path}=    Make Path Windows Compatible    ${video_path}
-    [Return]    ${video_path}
+    RETURN    ${video_path}
 ##############################################################
 Accept Cookie Policy
     ${cookie_law}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${page.cookie_button}    5s
@@ -172,29 +172,29 @@ Fill Contact Form TC
 
     Scroll To Bottom
     Accept Cookie Policy
-    Type Text    ${tc.form.name_field}    Test    delay=200ms
-    Type Text    ${tc.form.email_field}    test_email@test.de     delay=200ms
-    Type Text    ${tc.form.phone_field}    01758542369     delay=200ms
-    Type Text    ${tc.form.subject_field}           Company event  delay=200ms
-    Type Text    ${tc.form.message_field}     test msg      delay=200ms
-    Click    ${tc.form.privacy_checkbox}
-    Click    ${tc.form.submit_button}
+    Type Text    ${tc_form.name_field}    Test    delay=200ms
+    Type Text    ${tc_form.email_field}    test_email@test.de     delay=200ms
+    Type Text    ${tc_form.phone_field}    01758542369     delay=200ms
+    Type Text    ${tc_form.subject_field}           Company event  delay=200ms
+    Type Text    ${tc_form.message_field}     test msg      delay=200ms
+    Click    ${tc_form.privacy_checkbox}
+    Click    ${tc_form.submit_button}
 
 ##################################################################
 Verify Contact Form Validation Errors TC
 
     Scroll To Bottom
     Accept Cookie Policy
-    Click    ${tc.form.submit_button}   #submit button 
-    Wait Until Element Is Visible    ${tc.form.error_alert}   5s               
-    Wait Until Element Is Visible    ${tc.form.name_error}    5s                   
-    Wait Until Element Is Visible    ${tc.form.subject_error}        5s  
-    Wait Until Element Is Visible    ${tc.form.message_error}        5s   
+    Click    ${tc_form.submit_button}   #submit button 
+    Wait Until Element Is Visible    ${tc_form.error_alert}   5s               
+    Wait Until Element Is Visible    ${tc_form.name_error}    5s                   
+    Wait Until Element Is Visible    ${tc_form.subject_error}        5s  
+    Wait Until Element Is Visible    ${tc_form.message_error}        5s   
 
 #################################################################        
 Verify Booking Confirmation Message TC 
    
-    Wait Until Element Is Visible   ${tc.form.success_message}    5s    #success msg
+    Wait Until Element Is Visible   ${tc_form.success_message}    5s    #success msg
 
 #############################################################
 Verify Header Navigation TC 

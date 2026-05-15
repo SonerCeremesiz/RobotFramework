@@ -4,7 +4,7 @@
 Library    Browser    strict=False    
 Resource    ../keywords/resources.robot
 
-Test Setup    Setup Test Environment
+Test Setup    Setup Test Environment    True
 Test Teardown    Teardown Test Environment 
 
 
