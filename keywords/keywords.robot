@@ -26,7 +26,6 @@ Setup Test Environment
     END
     Show Keyword Banner    True    top: 5px; bottom: auto; left: 5px; background-color: #00909077; font-size: 12px; color: black;
     Sleep    5s
-    Log To Console      Page is open
     Accept Cookie Policy
 ############################################################
 Teardown Test Environment
@@ -113,9 +112,7 @@ Select Training From Side Menu
         ${selector}=    Get From List    ${selectors}    ${index}
         ${location}=    Get From List    ${locations}    ${index}
         Click    ${selector}
-        Log To Console    Clicked on ${selector}
         Sleep    3s
-        Log To Console    Verifying location contains ${location}
         Wait Until Location Contains    ${location}
     END
 #############################################################
@@ -167,7 +164,7 @@ Navigate To Testconsulting Page
 ###############################################################
 Navigate to Conatct Form TC
 
-    Click   ${tc.header.contact}
+    Click   ${tc_header.contact}
     Wait Until Location Contains     /kontakt
 
 #################################################################
@@ -202,15 +199,26 @@ Verify Booking Confirmation Message TC
 #############################################################
 Verify Header Navigation TC 
 
-    @{selectors}=    Get Dictionary Values    ${tc.header}
+    @{selectors}=    Get Dictionary Values    ${tc_header}
     @{locations}=    Get Dictionary Values    ${locations.tc}
     ${length}=    Get Length    ${selectors}
     FOR    ${index}    IN RANGE    0    ${length}
         ${selector}=    Get From List    ${selectors}    ${index}
         ${location}=    Get From List    ${locations}    ${index}
         Click With Options   ${selector}     force=True    clickCount=2
-        Log To Console   Clicked on ${selector}
         Sleep   3s
-        Log To Console   Verifying location contains ${location}
         Wait Until Location Contains   ${location}
     END
+#############################################################
+Navigate to Career Page TC
+    Log To Console    message${tc_header.career} 
+    Click    ${tc_header.career}         #career page button
+    Wait Until Location Contains   /karriere    
+
+##################################################################
+Verify Career Page Elements TC    
+   
+    @{selectors}=    Get Dictionary Values    ${tc.career_page}
+    Wait Until All Elements Of List Are Visible       @{selectors}   
+
+#################################################################

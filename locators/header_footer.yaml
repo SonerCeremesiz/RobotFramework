@@ -6,7 +6,13 @@ header:
     search_field: css=input.form-control.border-0.shadow-none.bg-primary.text-white.placeholder-light 
     home_button: css=a.m-2.fw-bold.me-5.text-decoration-none.text-primary
 
-
+tc_header:
+    home_page:  css=li.level-0.selected a
+    about_us: css=[id="nav"] a[href="/ueber-uns/"]
+    consulting: css=[id="nav"] a[href="/consulting/"]
+    career:  css=[id="nav"] a[href="/karriere/"]
+    insights:  css=[id="nav"] a[href="/aktuelles/"]
+    contact:  css=[id="nav"] a[href="/kontakt/"]
 
 footer:
-        search_field: css=input.form-control.rounded-4.w-100
+    search_field: css=input.form-control.rounded-4.w-100

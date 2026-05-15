@@ -1,5 +1,5 @@
 page:
-  cookie_button: css=p:nth-child(3) button.api--function-all.btn.btn-primary.btn-sm
+  #cookie_button: css=p:nth-child(3) button.api--function-all.btn.btn-primary.btn-sm
   discover_trainings: css=div.home-hero [href="#schulungen"]
   company_training: css=#schulungen > div > div:nth-child(1) > a
   consulting_appointment: css=div:nth-child(2) > div.tca-card-body > div.tca-actions > a
@@ -18,4 +18,11 @@ page:
     atlassian_training:   css=[href*="/Atlassian?q=#schulungen"]
     softwareentwicklung_training: css=[href*="/Softwareentwicklung?q=#schulungen"]
     management_training:  css=[href*="/Management?q=#schulungen"]
+
+tc:
+  career_page:
+    benefits: css=#m-432 > a
+    initiative_application:  css=#m-433 > a
+    title:  css=#m-429 > p
+    job_openings: css=#m-266 > h2
   

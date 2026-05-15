@@ -32,3 +32,10 @@ Check Header Navigation
     Verify Header Navigation TC  
 
 ################################################################
+Test Career Page
+    [Tags]    TestConsulting Production Test
+
+    Navigate to Career Page TC
+    Verify Career Page Elements TC  
+
+################################################################
